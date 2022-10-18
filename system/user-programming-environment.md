@@ -145,13 +145,11 @@ $ module load intel/18.0.3
 
 The following is an example of creating an execution file test.exe by compiling a test sample file with the Intel compiler in the **KNL computing node**.
 
-```
-$ module load craype-mic-knl intel/18.0.3
- $ icc –o test.exe –O3 –fPIC –xMIC-AVX512 test.c
+<pre><code><strong> $ module load craype-mic-knl intel/18.0.3
+</strong> $ icc –o test.exe –O3 –fPIC –xMIC-AVX512 test.c
  or
  $ ifort -o test.exe -O3 -fPIC -xMIC-AVX512 test.f90
- $ ./test.exe
-```
+ $ ./test.exe</code></pre>
 
 ※ Copy the test sample file for job submission in /apps/shell/home/job\_examples
 
@@ -317,7 +315,7 @@ $ module load cce/8.6.3
 The following is an example of creating an execution file test.exe by compiling a test sample file with the PGI compiler in the **KNL computing node**.
 
 ```
-$ module load craype-mic-knl cce/8.6.3 PrgEnv-cray/1.0.2
+ $ module load craype-mic-knl cce/8.6.3 PrgEnv-cray/1.0.2
  $ cc –o test.exe –hcpu=mic-knl test.c
  or
  $ ftn –o test.exe –hcpu=mic-knl test.f90
