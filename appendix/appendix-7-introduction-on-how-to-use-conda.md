@@ -52,10 +52,9 @@ For Anaconda, you can download a version suitable for each OS from the website: 
 
 \- If the "--use-local" option is used, the conda environment is created in the user’s home directory (**${HOME}/.conda/envs/\[environment\_name]**).
 
-\- Example -
-
+{% code title="- Example -" %}
 ```
-$ module load python/3.7
+ $ module load python/3.7
  $ conda create -n scikit-learn_0.21 --use-local
  Collecting package metadata: done
  Solving environment: done
@@ -80,6 +79,7 @@ $ module load python/3.7
  $ source activate scikit-learn_0.21
  (scikit-learn_0.21) $  
 ```
+{% endcode %}
 
 ## **3. Install and Check Packages in Conda Environment**
 
@@ -89,10 +89,9 @@ $ module load python/3.7
 
 \- Packages are installed under the conda environment path created in Section "2" above.
 
-\- Example -
-
+{% code title="- Example -" %}
 ```
-$ module load python/3.7
+ $ module load python/3.7
  $ source activate scikit-learn_0.21
  (scikit-learn_0.21) $ conda install scikit-learn
  Collecting package metadata: done
@@ -131,13 +130,13 @@ $ module load python/3.7
  (scikit-learn_0.21) $ python -c "import sklearn"
  (scikit-learn_0.21) $
 ```
+{% endcode %}
 
 ## **4. Check Conda Environment List**
 
 \- You can check the conda environment list using "conda-env list" or "conda env list."
 
-\-Example-
-
+{% code title="- Example -" %}
 ```
 (scikit-learn_0.21) $ conda env list
  # conda environments:
@@ -147,19 +146,20 @@ $ module load python/3.7
  (scikit-learn_0.21) $ conda deactivate
  $
 ```
+{% endcode %}
 
 ## **5. Remove Conda Environment**
 
 \- You can remove a conda environment using "conda-env remove -n \[ENVIRONMENT]" or "conda env remove -n \[ENVIRONMENT]."
 
-\-Example-
-
+{% code title="- Example -" %}
 ```
 $ module load python/3.7
 $ conda env remove -n scikit-learn_0.21
 Remove all packages in environment /home01/userID/.conda/envs/scikit-learn_0.21:
 $
 ```
+{% endcode %}
 
 
 
@@ -173,11 +173,8 @@ $
 
 (Example) When the external Internet is not connected, when the same conda environment is used in another system
 
-\-Example-
-
-```
-$ module load python/3.7
- $ source activate tensorflow_1.12
+<pre data-title="- Example -"><code><strong> $ module load python/3.7
+</strong> $ source activate tensorflow_1.12
  (tensorflow_1.12) $ conda install -c conda-forge -n tensorflow_1.12 conda-pack
  (tensorflow_1.12) $ conda pack -n tensorflow_1.12 -o conda_tensorflow_1.12.tar.gz
  Collecting packages...
@@ -185,17 +182,15 @@ $ module load python/3.7
  [########################################] | 100% Completed |  4min 18.8s
  (tensorflow_1.12) $ ls -l conda_tensorflow_1.12.tar.gz
  -rw-------. 1 userID in0162 1459826406 Mar 28 15:03 conda_tensorflow_1.12.tar.gz
- (tensorflow_1.12) $
-```
+ (tensorflow_1.12) $</code></pre>
 
 ## **7. Import Conda Environment**
 
 \- You can import the conda environment that was created using conda pack, as shown in the example below, and use it after setting the environment.
 
-\-Example-
-
+{% code title="- Example -" %}
 ```
-$ module load python/3.7
+ $ module load python/3.7
  $ mkdir -p $HOME/.conda/envs/tensorflow_1.12
  $ tar xvzf conda_tensorflow_1.12.tar.gz -C $HOME/.conda/envs/tensorflow_1.12
  $ source activate tensorflow_1.12
@@ -203,6 +198,7 @@ $ module load python/3.7
  (tensorflow_1.12) $ conda deactivate
  $
 ```
+{% endcode %}
 
 {% hint style="info" %}
 2022년 2월 15일에 마지막으로 업데이트되었습니다.
