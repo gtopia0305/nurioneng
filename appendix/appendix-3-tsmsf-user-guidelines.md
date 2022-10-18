@@ -116,20 +116,43 @@ To archive the user data, please use the Nurion system's login node or Datamover
 
 Among the files in the specified directory (/scratch/arcv/$USER), the files that are larger than 10 Mbytes and have not been accessed for 3 days (to be changed later) are automatically archived. For the archived files, only the temporary files (chunk files) with a file size of 0 bytes remain in that directory, as shown below, and the actual data exists in the tape library. If the number of files increases, it takes longer to archive the files to the tape library or restore the files to the disk for use. Hence, if possible, it is recommended that the number of files be reduced by compressing (e.g., tar) them.
 
-| <p>[user01@dm2 ~] <strong>ls –lh /scratch/arcv/$USER/*</strong></p><p>... omitted ...</p><p>-rw-r--r-- 1 root root 0 Feb 5 18:51 2019-2-19-18-51.[File Name].archived</p><p>... omitted ...</p> |
-| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+```
+[user01@dm2 ~] ls –lh /scratch/arcv/$USER/*
+... omitted ...
+-rw-r--r-- 1 root root 0 Feb 5 18:51 2019-2-19-18-51.[File Name].archived
+... omitted ...
+```
 
-o Example
-
-| <p># ls -l <strong>/scratch/arcv/testdir/</strong></p><p>total 2744320</p><p>-rw-r--r-- 1 root root 0 Feb 25 20:48 2019-2-25-20-48.test.220M.archived</p><p>-rw-r--r-- 1 root root 0 Feb 25 20:48 2019-2-25-20-48.test.230M.archived</p><p>-rw-r--r-- 1 root root 104857600 Sep 27 14:54 test.100M</p><p>-rw-r--r-- 1 root root 10485760 Sep 27 14:54 test.10M</p><p>-rw-r--r-- 1 root root 115343360 Sep 27 14:54 test.110M</p><p>... omitted ...</p> |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+{% code title="o Example" %}
+```
+# ls -l /scratch/arcv/testdir/
+total 2744320
+-rw-r--r-- 1 root root 0 Feb 25 20:48 2019-2-25-20-48.test.220M.archived
+-rw-r--r-- 1 root root 0 Feb 25 20:48 2019-2-25-20-48.test.230M.archived
+-rw-r--r-- 1 root root 104857600 Sep 27 14:54 test.100M
+-rw-r--r-- 1 root root 10485760 Sep 27 14:54 test.10M
+-rw-r--r-- 1 root root 115343360 Sep 27 14:54 test.110M
+... omitted ...
+```
+{% endcode %}
 
 **3.3 Checking the detailed information about the archived files**
 
 For the archived data, the arc\_ls command can be used to check the detailed information about the files, as shown below.
 
-| <p># arc_ls <strong>/scratch/arcv/testdir/</strong></p><p>DIR: /scratch/arcv/testdir</p><p>ARC: /scratch/arcv/testdir/2019-2-25-20-48.test.460M.archived</p><p>- File to restore : /scratch/arcv/testdir/test.460M</p><p>- File owner : 0</p><p>- File group : 0</p><p>- File size : 482344960</p><p>- Archived Name : 3_7_4_6_scratcharcvtestdirtest.460M</p><p>- Archived time : 1551095210</p><p>NRM: /scratch/arcv/testdir/test.10M</p><p>... omitted ...</p> |
-| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+```
+# arc_ls /scratch/arcv/testdir/
+DIR: /scratch/arcv/testdir
+ARC: /scratch/arcv/testdir/2019-2-25-20-48.test.460M.archived
+- File to restore : /scratch/arcv/testdir/test.460M
+- File owner : 0
+- File group : 0
+- File size : 482344960
+- Archived Name : 3_7_4_6_scratcharcvtestdirtest.460M
+- Archived time : 1551095210
+NRM: /scratch/arcv/testdir/test.10M
+... omitted ...
+```
 
 The arc\_ls command can take the relative or absolute path of a directory or file as an argument. It can also search the subdirectories of the specified directory through the -r option when needed. In the output result, DIR denotes a directory, NRM a regular file, and ARC an archived file.
 
@@ -139,13 +162,40 @@ The arc\_ls command can take the relative or absolute path of a directory or fil
 
 To use the archived data, the files need to be restored. The command used to restore files is arc\_restore. **This command is time consuming to process because the data files are retrieved from the tape library.** Archived files can be restored as follows:
 
-| <p>[user01@dm2 ~] <strong>arc_restore /scratch/arcv/$USER/[*.archived]</strong></p><p>... omitted ...</p><p>-rw-r--r-- 1 root root 200M Feb 5 18:51 <strong>[original file]</strong></p><p>... omitted ...</p> |
-| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+```
+[user01@dm2 ~] arc_restore /scratch/arcv/$USER/[*.archived]
+... omitted ...
+-rw-r--r-- 1 root root 200M Feb 5 18:51 [original file]
+... omitted ...
+```
 
 o Example
 
-| <p># arc_restore arc_restore /scratch/arcv/testdir/2019-2-25-20-49.test.580M.archived</p><p>ARCRESTORE : start to find archived files.</p><p>Processing restore queue...</p><p>[207249:207265] resRunner : filecheck : ADD : 1/0/0 : /scratch/arcv/testdir/test.580M</p><p>[207265:207269] Process ID 207269 started for restoring...</p><p>[207265:207269] File to restore : /scratch/arcv/testdir/test.580M</p><p>[207265:207269] File owner : 0</p><p>[207265:207269] File group : 0</p><p>[207265:207269] File size : 608174080</p><p>[207265:207269] Archived Name : 3_7_4_6_scratcharcvtestdirtest.580M</p><p>[207265:207269] Archived time : 1551095339</p><p>[207265:207269] Restore started at : Thu Feb 28 12:16:43 2019</p><p>[207265:207269] restoreFile : sh PTLGet -p 3_7_4_8_scratcharcvtestdirtest.580M -d /scratch/arcv/testdir -t 1551095339</p><p>[207265:207269] restoreFile : move /scratch/arcv/testdir/.working/3_7_4_6_scratcharcvtestdirtest.580M to /scratch/arcv/testdir/test.580M</p><p>[207265:207269] restoreFile : unlink /scratch/arcv/testdir/2019-2-25-20-49.test.580M.archived</p><p>[207265:207269] restoreFile : dbupdate( ARCHIVED_FILES / last_mod=1551323868,restore_count=1,status_id=1,result_id=1 Where file_id=341 )</p><p>[207265:207269] Restoring was done : /scratch/arcv/testdir/test.580M</p><p>[207249:207265] resRunner : CProc was forked : CProc count=1, CProc tCount=1</p><p>[207249:207265] resRunner : [ success=1 / fail=0 ] 207269 was finished : Success</p><p>resRunner : REPORT : resresult : Success=1 / Fail=0</p><p>Main thread runtime = 00:01:05</p> |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+{% code title="o Example" %}
+```
+# arc_restore arc_restore /scratch/arcv/testdir/2019-2-25-20-49.test.580M.archived
+ARCRESTORE : start to find archived files.
+Processing restore queue...
+[207249:207265] resRunner : filecheck : ADD : 1/0/0 : /scratch/arcv/testdir/test.580M
+[207265:207269] Process ID 207269 started for restoring...
+[207265:207269] File to restore : /scratch/arcv/testdir/test.580M
+[207265:207269] File owner : 0
+[207265:207269] File group : 0
+[207265:207269] File size : 608174080
+[207265:207269] Archived Name : 3_7_4_6_scratcharcvtestdirtest.580M
+[207265:207269] Archived time : 1551095339
+[207265:207269] Restore started at : Thu Feb 28 12:16:43 2019
+[207265:207269] restoreFile : sh PTLGet -p 3_7_4_8_scratcharcvtestdirtest.580M -d /scratch/arcv/testdir -t 1551095339
+[207265:207269] restoreFile : move /scratch/arcv/testdir/.working/3_7_4_6_scratcharcvtestdirtest.580M to /scratch/arcv/testdir/test.580M
+[207265:207269] restoreFile : unlink /scratch/arcv/testdir/2019-2-25-20-49.test.580M.archived
+[207265:207269] restoreFile : dbupdate( ARCHIVED_FILES / last_mod=1551323868,restore_count=1,status_id=1,result_id=1 Where file_id=341 )
+[207265:207269] Restoring was done : /scratch/arcv/testdir/test.580M
+[207249:207265] resRunner : CProc was forked : CProc count=1, CProc tCount=1
+[207249:207265] resRunner : [ success=1 / fail=0 ] 207269 was finished : Success
+resRunner : REPORT : resresult : Success=1 / Fail=0
+Main thread runtime = 00:01:05
+```
+{% endcode %}
 
 Similar to the arc\_ls command, the arc\_restore command can take the relative or absolute path of a directory or file as an argument. It can also search the subdirectories of the specified directory through the -r option when needed. In addition, either the chunk file name (timestamp.\[File Name].archived) or the original file name can be specified when specifying the file.
 
