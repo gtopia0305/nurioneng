@@ -123,8 +123,7 @@ Among the files in the specified directory (/scratch/arcv/$USER), the files that
 ... omitted ...
 ```
 
-o Example
-
+{% code title="o Example" %}
 ```
 # ls -l /scratch/arcv/testdir/
 total 2744320
@@ -135,6 +134,7 @@ total 2744320
 -rw-r--r-- 1 root root 115343360 Sep 27 14:54 test.110M
 ... omitted ...
 ```
+{% endcode %}
 
 **3.3 Checking the detailed information about the archived files**
 
@@ -169,8 +169,7 @@ To use the archived data, the files need to be restored. The command used to res
 ... omitted ...
 ```
 
-o Example
-
+{% code title="o Example" %}
 ```
 # arc_restore arc_restore /scratch/arcv/testdir/2019-2-25-20-49.test.580M.archived
 ARCRESTORE : start to find archived files.
@@ -194,6 +193,7 @@ Processing restore queue...
 resRunner : REPORT : resresult : Success=1 / Fail=0
 Main thread runtime = 00:01:05
 ```
+{% endcode %}
 
 Similar to the arc\_ls command, the arc\_restore command can take the relative or absolute path of a directory or file as an argument. It can also search the subdirectories of the specified directory through the -r option when needed. In addition, either the chunk file name (timestamp.\[File Name].archived) or the original file name can be specified when specifying the file.
 
