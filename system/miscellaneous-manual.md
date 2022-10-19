@@ -100,19 +100,18 @@ _※ A convolutional model sample program (convolutional.py) and data directory 
 
 **ㅇ For users to build a singularity container image without root permission**
 
-**(Local build)**
-
+{% code title="(Local build)" %}
 ```
 $ singularity build --fakeroot ubuntu1.sif ubuntu.def (building ubuntu1.sif image from the recipe file)
 $ singularity build --fakeroot ubuntu2.sif library://ubuntu:18.04 (building ubuntu2.sif image from the singularity library)
 $ singularity build --fakeroot --sandbox ubuntu3 docker://ubuntu:18.04 (building sandbox directory (ubuntu3) from Docker Hub)
 ```
+{% endcode %}
 
 _※ It is supported in the 3.6.4 version; go to KISTI website > Technical Support > Inquiry to request the administrator to register for the use of fakeroot._\
 _※ Root permission is required to adjust the generated singularity image file (\*.sif), and it needs to be converted into a sandbox (writable chroot directory)._
 
-**(Example of ubuntu.def recipe file)**
-
+{% code title="(Example of ubuntu.def recipe file)" %}
 ```
 bootstrap: library
  from: ubuntu:18.04
@@ -121,24 +120,25 @@ bootstrap: library
  %runscript
  echo "hello world from ubuntu container!"
 ```
+{% endcode %}
 
-**(Remote build)**
-
+{% code title="(Remote build)" %}
 ```
  $ singularity build --remote ubuntu4.sif ubuntu.def 
  (Building ubuntu4.sif image from the recipe file using a remote build service provided by Sylabs Cloud)
 ```
+{% endcode %}
 
 _※ An access token needs to be generated and registered on Nurion to use a remote build service provided by Sylabs Cloud (https://cloud.sylabs.io) \[reference 1]_\
 _※ Generating/managing a singularity container image is possible by accessing Sylabs Cloud on a web browser \[reference 2]_
 
-**(Import/export singularity container image)**
-
+{% code title="(Import/export singularity container image)" %}
 ```
 $ singularity pull tensorflow.sif library://dxtr/default/hpc-tensorflow:0.1 (importing a container image from the Sylabs Cloud library)
 $ singularity pull tensorflow.sif docker://tensorflow/tensorflow:latest (importing an image from Docker Hub and converting it into a singularity image)
 $ singularity push -U tensorflow.sif library://ID/default/tensorflow.sif (exporting a singularity image to the Sylabs Cloud library (upload))
 ```
+{% endcode %}
 
 _※ An access token needs to be generated and registered on Nurion to export an image to Sylabs Cloud (https://cloud.sylabs.io) \[reference 1]_
 
